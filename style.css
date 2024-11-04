@@ -47,6 +47,8 @@ main {
 main p,
 main h1 {
     color: var(--nykodepurple);
+}
+main p {
     font-size: 1.6em;
 }
 
@@ -147,4 +149,16 @@ main h1 {
     inset: 0;
     position: absolute;
     border-radius: 5em;
+}
+
+@media (width < 500px) {
+    main p,
+    #registrer input {
+        font-size: 1em;
+    }
+
+    #tren button {
+        margin-top: 100px;
+        font-size: 1.4em;
+    }
 }
