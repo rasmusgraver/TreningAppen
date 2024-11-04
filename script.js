@@ -1,24 +1,43 @@
-
-let brukernavn = localStorage.getItem("brukernavn");
-let gruppenavn = localStorage.getItem("gruppenavn");
+let brukernavn = localStorage.getItem("brukernavn")
+let gruppenavn = localStorage.getItem("gruppenavn")
 
 console.log("brukernavn", brukernavn, "gruppenavn", gruppenavn)
 
 mainRegistrer = document.getElementById("registrer")
 mainTren = document.getElementById("tren")
 
-
-if (!(brukernavn && gruppenavn)) {
-    mainRegistrer.style.display = "flex"
-    mainTren.style.display = "none"
-} else {
-    mainRegistrer.style.display = "none"
-    mainTren.style.display = "flex"
-}
+visTrening()
 
 function registrer() {
     gruppenavn = document.getElementById("gruppeinput").value.toLowerCase()
     brukernavn = document.getElementById("brukerinput").value
 
     console.log("brukernavn", brukernavn, "gruppenavn", gruppenavn)
+
+    localStorage.setItem("brukernavn", brukernavn)
+    localStorage.setItem("gruppenavn", gruppenavn)
+
+    visTrening()
+}
+
+function visRegistrer() {
+    document.getElementById("brukerinput").value = brukernavn
+    document.getElementById("gruppeinput").value = gruppenavn
+    mainRegistrer.style.display = "flex"
+    mainTren.style.display = "none"
+}
+
+function visTrening() {
+    if (!(brukernavn && gruppenavn)) {
+        visRegistrer()
+    } else {
+        document.getElementById("brukertekst").innerHTML = brukernavn
+        document.getElementById("gruppetekst").innerHTML = gruppenavn
+        mainRegistrer.style.display = "none"
+        mainTren.style.display = "flex"
+    }
+}
+
+function hartrent() {
+    alert("Gratulerer!")
 }

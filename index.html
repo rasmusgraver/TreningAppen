@@ -5,23 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>TreningsAppen</title>
         <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
     </head>
     <body>
         <main id="registrer">
-            <h1>Registrer navn og gruppe</h1>
+            <h1>Registrer</h1>
             <div>
-                Gruppe
+                <p>Gruppe</p>
                 <input type="text" name="gruppe" id="gruppeinput" />
             </div>
             <div>
-                Bruker
+                <p>Bruker</p>
                 <input type="text" name="bruker" id="brukerinput" />
             </div>
             <button onclick="registrer()">Registrer</button>
         </main>
 
         <main id="tren" style="display: flex">
-            <button>
+            <p>
+                Gruppe: <span id="gruppetekst"></span>
+                <i class="fa-solid fa-pencil" onclick="visRegistrer()"></i>
+            </p>
+            <p>Bruker: <span id="brukertekst"></span></p>
+            <button onclick="hartrent()">
                 <span>Jeg har trent!</span>
             </button>
         </main>

@@ -19,19 +19,21 @@ img {
     --text: hsla(var(--hue), 70%, 10%, 0.9);
     --gradoffset: 45%;
     --gradgap: 30%;
+    --nykodepurple: #8548c7;
+    --nykodeorange: #ef6e2d;
 }
 
 main {
     height: 100vh;
     display: none; /* endres med JS */
-    background-color: aliceblue;
+    background-image: url("trening.jpg");
+    background-size: cover;
+    background-position: center;
     align-items: center;
     justify-content: center;
-}
-
-#registrer {
     flex-direction: column;
     gap: 40px;
+    font-size: 1.6em;
 }
 
 #registrer > div {
@@ -42,24 +44,39 @@ main {
     font-size: 1.6em;
 }
 
-#registrer input, #registrer button {
+main p,
+main h1 {
+    color: var(--nykodepurple);
     font-size: 1.6em;
+}
+
+#registrer input,
+#registrer button {
+    font-size: 1.2em;
     border-radius: 10px;
     padding: 2px;
 }
 #registrer input {
     width: 60%;
+    color: var(--nykodeorange);
+    background-color: var(--nykodepurple);
 }
 
 #registrer button {
     padding: 5px;
     font-size: 1.6em;
-    background-color: var(--clr);
+    color: var(--nykodepurple);
+    background-color: var(--nykodeorange);
 }
 
+#tren i {
+    position: absolute;
+    right: 40px;
+}
 #tren button {
     font-family: var(--font);
     display: flex;
+    margin-top: 180px;
     font-size: 2.2em;
     color: var(--text);
     font-weight: 500;
