@@ -1,80 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+}
+
 :root {
     --hue: 190deg;
     --sat: 50%;
     --blur: 0px;
     --hue2: calc(var(--hue) + 60deg);
     --sat2: calc(var(--sat) + 10%);
-    --clr: hsl(var(--hue) var(--sat) 90%);  
+    --clr: hsl(var(--hue) var(--sat) 90%);
     --clr2: hsl(var(--hue2) var(--sat2) 85%);
-    --text: hsla(var(--hue), 70%, 10%, .9);
+    --text: hsla(var(--hue), 70%, 10%, 0.9);
     --gradoffset: 45%;
     --gradgap: 30%;
-  }
+}
 
-button {
+main {
+    height: 100vh;
+    display: none; /* endres med JS */
+    background-color: aliceblue;
+    align-items: center;
+    justify-content: center;
+}
+
+#registrer {
+    flex-direction: column;
+    gap: 40px;
+}
+
+#registrer > div {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6em;
+}
+
+#registrer input, #registrer button {
+    font-size: 1.6em;
+    border-radius: 10px;
+    padding: 2px;
+}
+#registrer input {
+    width: 60%;
+}
+
+#registrer button {
+    padding: 5px;
+    font-size: 1.6em;
+    background-color: var(--clr);
+}
+
+#tren button {
     font-family: var(--font);
     display: flex;
-    font-size: 6vw;
+    font-size: 2.2em;
     color: var(--text);
     font-weight: 500;
     letter-spacing: -0.025em;
     background-color: var(--clr);
-    background-image: linear-gradient(180deg, var(--clr2) var(--gradgap), transparent calc(100% - var(--gradgap)));
+    background-image: linear-gradient(
+        180deg,
+        var(--clr2) var(--gradgap),
+        transparent calc(100% - var(--gradgap))
+    );
     background-repeat: no-repeat;
     background-position: center var(--gradoffset);
     background-size: 100% 200%;
     padding: 1.1em 1.5em;
     border-radius: 2em;
     border: none;
-    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent, 0 0.25em 0.3em -0.2em hsla(var(--hue), var(--sat), 50%, 0.46), 0 0.25em 0.75em hsla(190deg, calc(50% - 10%), 40%, 0.3);
+    box-shadow: 0 -0.5em 0.5em transparent, 0 0.5em 0.5em transparent,
+        0 0.25em 0.3em -0.2em hsla(var(--hue), var(--sat), 50%, 0.46),
+        0 0.25em 0.75em hsla(190deg, calc(50% - 10%), 40%, 0.3);
     position: relative;
     transition: all 0.5s ease;
     outline: none;
 }
 
+#tren button::before {
+    background-image: radial-gradient(
+            ellipse,
+            hsla(var(--hue), 100%, 90%, 0.8) 20%,
+            transparent 50%,
+            transparent 200%
+        ),
+        linear-gradient(
+            90deg,
+            hsl(0deg, 0%, 25%) -10%,
+            transparent 30%,
+            transparent 70%,
+            hsl(0deg, 0%, 25%) 110%
+        );
+    box-shadow: inset 0 0.25em 0.75em hsla(0deg, 0%, 0%, 0.8),
+        inset 0 -0.05em 0.2em rgba(255, 255, 255, 0.4),
+        inset 0 -1px 3px hsla(var(--hue), 80%, 50%, 0.75);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-size: 200% 80%, cover;
+    background-position: center 220%;
+    mix-blend-mode: overlay;
+    filter: blur(calc(var(--blur) * 0.5));
+}
 
-button::before {
-  background-image: 
-    radial-gradient(ellipse, 
-      hsla(var(--hue), 100%, 90%, .8) 20%,
-      transparent 50%,
-      transparent 200%
-    ),
-    linear-gradient(90deg, 
-      hsl(0deg, 0%, 25%) -10%, 
-      transparent 30%, 
-      transparent 70%, 
-      hsl(0deg, 0%, 25%) 110%
+#tren button::after {
+    background: linear-gradient(
+        180deg,
+        hsla(var(--hue2), 100%, 90%, 0.9),
+        hsla(var(--hue2), calc(var(--sat2) * 0.7), 50%, 0.75) 40%,
+        transparent 80%
     );
-  box-shadow: 
-    inset 0 .25em .75em hsla(0deg, 0%, 0%, 0.8),
-    inset 0 -.05em .2em rgba(255, 255, 255, 0.4),
-    inset 0 -1px 3px hsla(var(--hue), 80%, 50%, .75);
-  background-blend-mode: overlay;
-  background-repeat: no-repeat;
-  background-size: 200% 80%, cover;
-  background-position: center 220%;
-  mix-blend-mode: overlay;
-  filter: blur(calc(var(--blur) * 0.5));
+    top: 0.075em;
+    left: 0.75em;
+    right: 0.75em;
+    bottom: 1.4em;
+    filter: blur(var(--blur));
+    mix-blend-mode: screen;
 }
 
-
-button::after {
-  background: linear-gradient(
-    180deg, 
-    hsla(var(--hue2),100%,90%,.9), 
-    hsla(var(--hue2),calc(var(--sat2)*0.7),50%,.75) 40%, 
-    transparent 80%
-  );
-  top: 0.075em;
-  left: 0.75em;
-  right: 0.75em;
-  bottom: 1.4em;
-  filter: blur(var(--blur));
-  mix-blend-mode: screen;
-}
-
-button::before, button::after {
+#tren button::before,
+#tren button::after {
     content: "";
     inset: 0;
     position: absolute;

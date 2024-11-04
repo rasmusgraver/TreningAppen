@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TreningsAppen</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TreningsAppen</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <main id="registrer">
+            <h1>Registrer navn og gruppe</h1>
+            <div>
+                Gruppe
+                <input type="text" name="gruppe" id="gruppeinput" />
+            </div>
+            <div>
+                Bruker
+                <input type="text" name="bruker" id="brukerinput" />
+            </div>
+            <button onclick="registrer()">Registrer</button>
+        </main>
 
-    <button>
-        <span>Jeg har trent!</span>
-    </button>
-</body>
+        <main id="tren" style="display: flex">
+            <button>
+                <span>Jeg har trent!</span>
+            </button>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
 </html>
