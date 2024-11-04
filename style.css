@@ -23,8 +23,13 @@ img {
     --nykodeorange: #ef6e2d;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 main {
-    height: 100vh;
+    height: 100%;
     display: none; /* endres med JS */
     background-image: url("trening.jpg");
     background-size: cover;
@@ -155,6 +160,10 @@ main p {
     main p,
     #registrer input {
         font-size: 1em;
+    }
+
+    #tren p {
+        font-size: 1.2em;
     }
 
     #tren button {
