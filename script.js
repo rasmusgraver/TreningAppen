@@ -44,4 +44,5 @@ function hartrent() {
     const trentSpan = document.getElementById("trent_tekst")
     trentSpan.innerHTML = "Bra jobba!"
     trentSpan.parentElement.style.backgroundColor = "#30ec3b"
+    addToDB()
 }
