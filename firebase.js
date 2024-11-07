@@ -40,7 +40,7 @@ async function addToDB(/* event? */) {
     // event.preventDefault()
     // let textRef = document.getElementById("todo-input")
     await setDoc(doc(treningCollection), {
-        gruppe: brukernavn,
+        gruppe: gruppenavn,
         navn: brukernavn,
         dato: "en_dag_her", // Date.now(),
     })
