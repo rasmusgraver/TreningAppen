@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img {
+    width: 100%;
+}
+
+:root {
+    --nykodepurple: #8548c7;
+    --nykodeorange: #ef6e2d;
+}
+
+body,
+html {
+    min-height: 100vh;
+}
+body {
+    background-image: url("trening.jpg");
+    background-position: center;
+    background-size: cover;
+    color: var(--nykodeorange);
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+h1,
+h2 {
+    background-color: var(--nykodepurple);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.table_container {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    width: fit-content;
+    margin: auto;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 5px;
+}
+
+th,
+td {
+    border: 1px solid var(--nykodeorange);
+    padding: 3px;
+}
