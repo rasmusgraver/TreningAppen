@@ -42,13 +42,17 @@ async function addToDB() {
     const dag = dato.getDate()
     const aar = dato.getFullYear()
     const datostr = aar + "_" + mnd + "_" + dag
-
-    await setDoc(doc(treningCollection), {
-        gruppe: gruppenavn,
-        navn: brukernavn,
-        dato: datostr,
-    })
-    console.log("Lagret til Firebase")
+    if (datostr != localStorage.getItem("datostr")) {
+        await setDoc(doc(treningCollection), {
+            gruppe: gruppenavn,
+            navn: brukernavn,
+            dato: datostr,
+        })
+        console.log("Lagret til Firebase")
+        localStorage.setItem("datostr", datostr)
+    } else {
+        console.log("Allerede lagret i Firebase")
+    }
 }
 
 window.addToDB = addToDB
