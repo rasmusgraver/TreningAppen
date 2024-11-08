@@ -36,18 +36,19 @@ const db = getFirestore(app)
 const dbName = "trening"
 const treningCollection = collection(db, dbName)
 
-async function addToDB(/* event? */) {
-    // event.preventDefault()
-    // let textRef = document.getElementById("todo-input")
+async function addToDB() {
+    const dato = new Date()
+    const mnd = dato.getMonth() + 1
+    const dag = dato.getDate()
+    const aar = dato.getFullYear()
+    const datostr = aar + "_" + mnd + "_" + dag
+
     await setDoc(doc(treningCollection), {
         gruppe: gruppenavn,
         navn: brukernavn,
-        dato: "en_dag_her", // Date.now(),
+        dato: datostr,
     })
     console.log("Lagret til Firebase")
-    // refreshItemList()
-    //   .catch((error) => console.warn(error))
-    // textRef.value = ""
 }
 
 window.addToDB = addToDB
