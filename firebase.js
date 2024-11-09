@@ -7,6 +7,7 @@ import {
     collection,
     getDocs,
     getDoc,
+    where,
     doc,
     setDoc,
     deleteDoc,
@@ -46,13 +47,32 @@ async function addToDB() {
         await setDoc(doc(treningCollection), {
             gruppe: gruppenavn,
             navn: brukernavn,
-            dato: datostr,
+            datostr: datostr,
+            dag: dag,
+            mnd: mnd,
+            aar: aar,
         })
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
+        verifiserInsert(datostr)
     } else {
         console.log("Allerede lagret i Firebase")
     }
 }
 
 window.addToDB = addToDB
+
+async function verifiserInsert(datostr) {
+    const querySnapshot = await getDocs(
+        query(
+            treningCollection,
+            where("datostr", "==", datostr),
+            where("navn", "==", brukernavn),
+            where("gruppe", "==", gruppenavn),
+            limit(1)
+        )
+    )
+    if (querySnapshot.docs.length == 0) {
+        alert("Fikk ikke lagret treningen din i Databasen!")
+    }
+}
