@@ -54,7 +54,7 @@ async function addToDB() {
         })
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
-        verifiserInsert(datostr) // TODO: Det her funka ikke helt
+        // verifiserInsert(datostr) // TODO: Det her funka ikke helt
         // TODO: I stedet: Hvis mld "Lagrer i DB" og så fjern den når suksess
     } else {
         console.log("Allerede lagret i Firebase")
@@ -63,6 +63,8 @@ async function addToDB() {
 
 window.addToDB = addToDB
 
+/*
+Venter litt med denne
 async function verifiserInsert(datostr) {
     const querySnapshot = await getDocs(
         query(
@@ -77,3 +79,4 @@ async function verifiserInsert(datostr) {
         alert("Fikk ikke lagret treningen din i Databasen!")
     }
 }
+*/
