@@ -54,7 +54,8 @@ async function addToDB() {
         })
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
-        verifiserInsert(datostr)
+        verifiserInsert(datostr) // TODO: Det her funka ikke helt
+        // TODO: I stedet: Hvis mld "Lagrer i DB" og så fjern den når suksess
     } else {
         console.log("Allerede lagret i Firebase")
     }
