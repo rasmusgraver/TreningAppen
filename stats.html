@@ -10,12 +10,17 @@
         <div class="container">
             <h1>Hvem har trent mest?</h1>
 
+            <!--   
+            Gamle måten å tenke...           
             <h2 id="current_month_header"></h2>
             <div class="table_container">
                 <table id="current_month_table"></table>
-            </div>
+            </div> -->
+
+            <button onclick="hentTreninger()">Hent stats</button>
         </div>
 
-        <script src="stats.js"></script>
+        <script type="module" src="firebase.js?v=2"></script>
+        <!-- Den gamle måten å gjøre det på...  script src="stats.js"></script -->
     </body>
 </html>

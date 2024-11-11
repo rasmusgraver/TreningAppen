@@ -80,3 +80,51 @@ async function verifiserInsert(datostr) {
     }
 }
 */
+
+async function hentTreninger() {
+    console.log("Henter treninger...")
+    const querySnapshot = await getDocs(
+        query(treningCollection, orderBy("datostr", "desc"), limit(100))
+    )
+    let gruppeListe = {}
+    querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        const gruppenavn = data.gruppe
+        console.log(
+            data.gruppe,
+            data.navn,
+            data.datostr,
+            data.dag,
+            data.mnd,
+            data.aar
+        )
+
+        let gruppe = null
+        if (gruppeListe[gruppenavn]) {
+            gruppe = gruppeListe[gruppenavn]
+        } else {
+            gruppe = {
+                gruppe: gruppenavn,
+                brukere: {},
+            }
+            gruppeListe[gruppenavn] = gruppe
+        }
+        const brukernavn = data.navn
+        let bruker = null
+        if (gruppe.brukere[brukernavn]) {
+            bruker = gruppe.brukere[brukernavn]
+            bruker.treninger++
+        } else {
+            bruker = {
+                brukernavn: brukernavn,
+                treninger: 1,
+            }
+            gruppe.brukere[brukernavn] = bruker
+        }
+    })
+
+    // console.log(gruppeListe)
+    console.log(JSON.stringify(gruppeListe, null, 2))
+}
+
+window.hentTreninger = hentTreninger
