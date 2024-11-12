@@ -131,7 +131,9 @@ async function hentTreninger() {
                 gruppe: gruppenavn,
                 brukere: {},
             }
-            gruppeListe[gruppenavn] = gruppe
+            if (gruppenavn != "test" && gruppenavn != "nykode") {
+                gruppeListe[gruppenavn] = gruppe
+            }
         }
         const brukernavn = data.navn.trim()
         let bruker = null
@@ -145,8 +147,10 @@ async function hentTreninger() {
             }
             gruppe.brukere[brukernavn] = bruker
         }
-        bruker.treninger++
-        bruker.datoer.push(data.datostr)
+        if (data.datostr && data.datostr != "2024_11_11") {
+            bruker.treninger++
+            bruker.datoer.push(data.datostr)
+        }
     })
 
     fixTreningsData(gruppeListe)
