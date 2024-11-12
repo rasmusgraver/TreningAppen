@@ -22,14 +22,9 @@ body {
     background-size: cover;
     color: var(--nykodeorange);
 }
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-    min-height: 100vh;
-}
 
 #results {
-    width: 60%;
+    width: 500px;
     border-radius: 20px;
     margin: 0 auto;
     background-color: rgba(0, 0, 0, 0.5);
