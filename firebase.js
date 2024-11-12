@@ -114,14 +114,22 @@ async function hentTreninger() {
         const data = doc.data()
         const gruppenavn = data.gruppe.trim()
 
-        if (data.navn == "Ida Sofie" || data.navn == "Gro Helene") {
+        if (
+            data.navn == "Ida Sofie" ||
+            data.navn == "Gro Helene" ||
+            data.navn == "Rasmus" ||
+            data.navn == "Anne"
+        ) {
             console.log(
                 data.gruppe,
                 data.navn,
                 data.datostr,
                 data.dag,
                 data.mnd,
-                data.aar
+                data.aar,
+                data.timestamp
+                    ? data.timestamp.toDate().toLocaleString()
+                    : "Ukjent"
             )
         }
 
@@ -171,6 +179,7 @@ function fixTreningsData(gruppeListe) {
             // Remove duplicates:
             bruker.datoer = [...new Set(bruker.datoer)]
             bruker.datoer.sort()
+            bruker.treninger = bruker.datoer.length
         })
     })
 }
