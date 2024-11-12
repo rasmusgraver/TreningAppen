@@ -18,12 +18,9 @@
     </head>
     <body>
         <main id="registrer">
-            <h1>Registrer</h1>
-            <div>
+            <div class="grid">
                 <p>Gruppe</p>
                 <input type="text" name="gruppe" id="gruppeinput" />
-            </div>
-            <div>
                 <p>Navn</p>
                 <input type="text" name="bruker" id="brukerinput" />
             </div>
@@ -31,11 +28,13 @@
         </main>
 
         <main id="tren" style="display: flex">
-            <p>
-                Gruppe: <span id="gruppetekst"></span>
-                <i class="fa-solid fa-pencil" onclick="visRegistrer()"></i>
-            </p>
-            <p>Navn: <span id="brukertekst"></span></p>
+            <div class="background">
+                <p>
+                    Gruppe: <span id="gruppetekst"></span>
+                    <i class="fa-solid fa-pencil" onclick="visRegistrer()"></i>
+                </p>
+                <p>Navn: <span id="brukertekst"></span></p>
+            </div>
             <canvas id="celebration"></canvas>
             <button onclick="hartrent()">
                 <span id="trent_tekst">Jeg har trent!</span>

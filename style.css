@@ -51,9 +51,11 @@ main {
     font-size: 1.6em;
 }
 
-#registrer > div {
-    display: flex;
-    gap: 1em;
+#registrer .grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    padding: 10px;
     align-items: center;
     justify-content: center;
     font-size: 1.6em;
@@ -74,7 +76,7 @@ main p {
     padding: 2px;
 }
 #registrer input {
-    width: 60%;
+    width: 100%;
     color: var(--nykodeorange);
     background-color: var(--nykodepurple);
 }
@@ -90,6 +92,8 @@ main p {
     color: white;
     background-color: darkblue;
     border-radius: 20px;
+    position: absolute;
+    bottom: 80px;
 }
 
 #status.blue {
@@ -108,6 +112,11 @@ main p {
 #tren i {
     position: absolute;
     right: 40px;
+}
+#tren .background {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 20px;
 }
 #tren button {
     font-family: var(--font);
@@ -186,9 +195,11 @@ main p {
 }
 
 @media (width < 500px) {
-    main p,
-    #registrer input {
+    main p {
         font-size: 1em;
+    }
+    #registrer input {
+        font-size: 0.8em;
     }
 
     #tren p {
