@@ -28,13 +28,30 @@ body {
     min-height: 100vh;
 }
 
+#results {
+    width: 60%;
+    border-radius: 20px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+}
 h1,
 h2 {
     background-color: var(--nykodepurple);
     padding: 20px;
     margin-bottom: 30px;
+    text-align: center;
 }
 
+.gruppe {
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.bruker {
+    font-size: 0.5em;
+}
+/* 
+Gamle måten å tenke på 
 .table_container {
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -52,4 +69,16 @@ th,
 td {
     border: 1px solid var(--nykodeorange);
     padding: 3px;
+}
+ */
+
+@media (width < 500px) {
+    h1,
+    h2 {
+        margin-bottom: 0;
+    }
+    #results {
+        width: 100%;
+        border-radius: 0;
+    }
 }

@@ -110,7 +110,7 @@ async function hentTreninger() {
     let gruppeListe = {}
     querySnapshot.forEach((doc) => {
         const data = doc.data()
-        const gruppenavn = data.gruppe
+        const gruppenavn = data.gruppe.trim()
 
         if (data.navn == "Ida Sofie" || data.navn == "Gro Helene") {
             console.log(
@@ -133,7 +133,7 @@ async function hentTreninger() {
             }
             gruppeListe[gruppenavn] = gruppe
         }
-        const brukernavn = data.navn
+        const brukernavn = data.navn.trim()
         let bruker = null
         if (gruppe.brukere[brukernavn]) {
             bruker = gruppe.brukere[brukernavn]
@@ -153,6 +153,8 @@ async function hentTreninger() {
 
     // console.log(gruppeListe)
     console.log(JSON.stringify(gruppeListe, null, 2))
+
+    skrivTreningerTilDom(gruppeListe)
 }
 
 window.hentTreninger = hentTreninger
@@ -163,6 +165,29 @@ function fixTreningsData(gruppeListe) {
             // Remove duplicates:
             bruker.datoer = [...new Set(bruker.datoer)]
             bruker.datoer.sort()
+        })
+    })
+}
+
+function skrivTreningerTilDom(gruppeListe) {
+    const resultsDiv = document.getElementById("results")
+    resultsDiv.innerHTML = ""
+    Object.values(gruppeListe).forEach((gruppe) => {
+        const gruppeDiv = document.createElement("div")
+        gruppeDiv.textContent = gruppe.gruppe
+        gruppeDiv.className = "gruppe"
+        resultsDiv.appendChild(gruppeDiv)
+        Object.values(gruppe.brukere).forEach((bruker) => {
+            const brukerDiv = document.createElement("div")
+            brukerDiv.className = "bruker"
+            brukerDiv.textContent = `${bruker.brukernavn} - ${bruker.treninger} treninger`
+            gruppeDiv.appendChild(brukerDiv)
+            /*             bruker.datoer.forEach((datostr) => {
+                const datoDiv = document.createElement("div")
+                datoDiv.textContent = datostr
+                brukerDiv.appendChild(datoDiv)
+            })
+ */
         })
     })
 }

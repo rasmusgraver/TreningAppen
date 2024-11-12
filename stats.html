@@ -17,10 +17,18 @@
                 <table id="current_month_table"></table>
             </div> -->
 
-            <button onclick="hentTreninger()">Hent stats</button>
+            <!-- button onclick="hentTreninger()">Hent stats</button -->
+
+            <div id="results"></div>
         </div>
 
         <script type="module" src="firebase.js?v=5"></script>
         <!-- Den gamle måten å gjøre det på...  script src="stats.js"></script -->
+        <script>
+            window.onload = function (e) {
+                console.log("window.onload")
+                hentTreninger()
+            }
+        </script>
     </body>
 </html>
