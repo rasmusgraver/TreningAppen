@@ -15,6 +15,7 @@ import {
     query,
     orderBy,
     limit,
+    serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"
 
 // Your web app's Firebase configuration
@@ -59,6 +60,7 @@ async function addToDB() {
             dag: dag,
             mnd: mnd,
             aar: aar,
+            timestamp: serverTimestamp(),
         })
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
