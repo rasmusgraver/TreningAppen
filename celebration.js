@@ -25,13 +25,19 @@ function randomFromTo(from, to) {
     return Math.floor(Math.random() * (to - from + 1) + from)
 }
 
-function confettiParticle() {
+function confettiParticle(i) {
     this.x = Math.random() * W // x
     this.y = Math.random() * H - H // y
     this.r = randomFromTo(11, 33) // radius
     this.d = Math.random() * maxConfettis + 11
-    this.color =
-        possibleColors[Math.floor(Math.random() * possibleColors.length)]
+    if (i % 3 == 0) {
+        this.color = "#8548c7"
+    } else if (i % 3 == 1) {
+        this.color = "#ef6e2d"
+    } else {
+        this.color =
+            possibleColors[Math.floor(Math.random() * possibleColors.length)]
+    }
     this.tilt = Math.floor(Math.random() * 33) - 11
     this.tiltAngleIncremental = Math.random() * 0.07 + 0.05
     this.tiltAngle = 0
@@ -89,5 +95,5 @@ function celebrate() {
 
 // Push new confetti objects to `particles[]`
 for (var i = 0; i < maxConfettis; i++) {
-    particles.push(new confettiParticle())
+    particles.push(new confettiParticle(i))
 }
