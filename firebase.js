@@ -43,7 +43,12 @@ async function addToDB() {
     const mnd = dato.getMonth() + 1
     const dag = dato.getDate()
     const aar = dato.getFullYear()
-    const datostr = aar + "_" + mnd + "_" + dag
+    const datostr =
+        aar +
+        "_" +
+        mnd.toString().padStart(2, "0") +
+        "_" +
+        dag.toString().padStart(2, "0")
     if (datostr != localStorage.getItem("datostr")) {
         statusDiv.textContent = "Lagrer til DB"
         statusDiv.className = "blue"
