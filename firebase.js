@@ -99,20 +99,24 @@ async function verifiserInsert(datostr) {
 async function hentTreninger() {
     console.log("Henter treninger...")
     const querySnapshot = await getDocs(
-        query(treningCollection, orderBy("datostr", "desc"), limit(100))
+        //    query(treningCollection, orderBy("datostr", "desc"), limit(100))
+        treningCollection
     )
     let gruppeListe = {}
     querySnapshot.forEach((doc) => {
         const data = doc.data()
         const gruppenavn = data.gruppe
-        console.log(
-            data.gruppe,
-            data.navn,
-            data.datostr,
-            data.dag,
-            data.mnd,
-            data.aar
-        )
+
+        if (data.navn == "Ida Sofie" || data.navn == "Gro Helene") {
+            console.log(
+                data.gruppe,
+                data.navn,
+                data.datostr,
+                data.dag,
+                data.mnd,
+                data.aar
+            )
+        }
 
         let gruppe = null
         if (gruppeListe[gruppenavn]) {
@@ -128,18 +132,32 @@ async function hentTreninger() {
         let bruker = null
         if (gruppe.brukere[brukernavn]) {
             bruker = gruppe.brukere[brukernavn]
-            bruker.treninger++
         } else {
             bruker = {
                 brukernavn: brukernavn,
-                treninger: 1,
+                treninger: 0,
+                datoer: [],
             }
             gruppe.brukere[brukernavn] = bruker
         }
+        bruker.treninger++
+        bruker.datoer.push(data.datostr)
     })
+
+    fixTreningsData(gruppeListe)
 
     // console.log(gruppeListe)
     console.log(JSON.stringify(gruppeListe, null, 2))
 }
 
 window.hentTreninger = hentTreninger
+
+function fixTreningsData(gruppeListe) {
+    Object.values(gruppeListe).forEach((gruppe) => {
+        Object.values(gruppe.brukere).forEach((bruker) => {
+            // Remove duplicates:
+            bruker.datoer = [...new Set(bruker.datoer)]
+            bruker.datoer.sort()
+        })
+    })
+}
