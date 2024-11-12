@@ -36,6 +36,7 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 const dbName = "trening"
 const treningCollection = collection(db, dbName)
+const statusDiv = document.getElementById("status")
 
 async function addToDB() {
     const dato = new Date()
@@ -44,6 +45,8 @@ async function addToDB() {
     const aar = dato.getFullYear()
     const datostr = aar + "_" + mnd + "_" + dag
     if (datostr != localStorage.getItem("datostr")) {
+        statusDiv.textContent = "Lagrer til DB"
+        statusDiv.className = "blue"
         await setDoc(doc(treningCollection), {
             gruppe: gruppenavn,
             navn: brukernavn,
@@ -54,17 +57,24 @@ async function addToDB() {
         })
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
-        // verifiserInsert(datostr) // TODO: Det her funka ikke helt
-        // TODO: I stedet: Hvis mld "Lagrer i DB" og så fjern den når suksess
+        verifiserInsert(datostr)
     } else {
         console.log("Allerede lagret i Firebase")
+        statusDiv.textContent = "Allerede lagret i DB"
+        statusDiv.className = "blue"
+        clearStatusTimer()
     }
 }
 
 window.addToDB = addToDB
 
-/*
-Venter litt med denne
+function clearStatusTimer() {
+    setTimeout(() => {
+        statusDiv.textContent = ""
+        statusDiv.className = ""
+    }, 2000)
+}
+
 async function verifiserInsert(datostr) {
     const querySnapshot = await getDocs(
         query(
@@ -77,9 +87,14 @@ async function verifiserInsert(datostr) {
     )
     if (querySnapshot.docs.length == 0) {
         alert("Fikk ikke lagret treningen din i Databasen!")
+        statusDiv.textContent = "Klarte ikke å lagre i DB"
+        statusDiv.className = "red"
+    } else {
+        statusDiv.textContent = "Lagret i DB"
+        statusDiv.className = "green"
+        clearStatusTimer()
     }
 }
-*/
 
 async function hentTreninger() {
     console.log("Henter treninger...")

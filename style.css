@@ -86,6 +86,25 @@ main p {
     background-color: var(--nykodeorange);
 }
 
+#status {
+    color: white;
+    background-color: darkblue;
+    border-radius: 20px;
+}
+
+#status.blue {
+    background-color: lightblue;
+    padding: 5px 20px;
+}
+#status.red {
+    background-color: lightcoral;
+    padding: 5px 20px;
+}
+#status.green {
+    background-color: lightgreen;
+    padding: 5px 20px;
+}
+
 #tren i {
     position: absolute;
     right: 40px;
