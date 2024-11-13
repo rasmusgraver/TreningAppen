@@ -109,55 +109,50 @@ async function hentTreninger() {
         //    query(treningCollection, orderBy("datostr", "desc"), limit(100))
         treningCollection
     )
+    let antMedTestGruppe = 0
+    let antMedTomDato = 0
     let gruppeListe = {}
     querySnapshot.forEach((doc) => {
         const data = doc.data()
         const gruppenavn = data.gruppe.trim()
 
-        if (
-            data.navn == "Ida Sofie" ||
-            data.navn == "Gro Helene" ||
-            data.navn == "Rasmus" ||
-            data.navn == "Anne"
-        ) {
-            console.log(
-                data.gruppe,
-                data.navn,
-                data.datostr,
-                data.dag,
-                data.mnd,
-                data.aar,
-                data.timestamp
-                    ? data.timestamp.toDate().toLocaleString()
-                    : "Ukjent"
-            )
-        }
-
-        let gruppe = null
-        if (gruppeListe[gruppenavn]) {
-            gruppe = gruppeListe[gruppenavn]
+        if (gruppenavn == "test" || gruppenavn == "nykode") {
+            // logData(data, "Ignorerer trening pga gruppenavn: ")
+            antMedTestGruppe++
+        } else if (!data.datostr || data.datostr == "2024_11_11") {
+            // logData(data, "Ignorerer trening pga dato:")
+            antMedTomDato++
         } else {
-            gruppe = {
-                gruppe: gruppenavn,
-                brukere: {},
+            if (
+                data.navn == "Ida Sofie" ||
+                data.navn == "Gro Helene" ||
+                data.navn.startsWith("Lars")
+            ) {
+                logData(data, "Debug:")
             }
-            if (gruppenavn != "test" && gruppenavn != "nykode") {
+
+            let gruppe = null
+            if (gruppeListe[gruppenavn]) {
+                gruppe = gruppeListe[gruppenavn]
+            } else {
+                gruppe = {
+                    gruppe: gruppenavn,
+                    brukere: {},
+                }
                 gruppeListe[gruppenavn] = gruppe
             }
-        }
-        const brukernavn = data.navn.trim()
-        let bruker = null
-        if (gruppe.brukere[brukernavn]) {
-            bruker = gruppe.brukere[brukernavn]
-        } else {
-            bruker = {
-                brukernavn: brukernavn,
-                treninger: 0,
-                datoer: [],
+            const brukernavn = data.navn.trim()
+            let bruker = null
+            if (gruppe.brukere[brukernavn]) {
+                bruker = gruppe.brukere[brukernavn]
+            } else {
+                bruker = {
+                    brukernavn: brukernavn,
+                    treninger: 0,
+                    datoer: [],
+                }
+                gruppe.brukere[brukernavn] = bruker
             }
-            gruppe.brukere[brukernavn] = bruker
-        }
-        if (data.datostr && data.datostr != "2024_11_11") {
             bruker.treninger++
             bruker.datoer.push(data.datostr)
         }
@@ -168,10 +163,29 @@ async function hentTreninger() {
     // console.log(gruppeListe)
     console.log(JSON.stringify(gruppeListe, null, 2))
 
+    console.log(
+        "Ignorerte treninger testGruppe (Det var 17): ",
+        antMedTestGruppe
+    )
+    console.log("Ignorerte treninger tomDato (Det var 14): ", antMedTomDato)
+
     skrivTreningerTilDom(gruppeListe)
 }
 
 window.hentTreninger = hentTreninger
+
+function logData(data, mld) {
+    console.log(
+        mld,
+        data.gruppe,
+        data.navn,
+        data.datostr,
+        data.dag,
+        data.mnd,
+        data.aar,
+        data.timestamp ? data.timestamp.toDate().toLocaleString() : "Ukjent"
+    )
+}
 
 function fixTreningsData(gruppeListe) {
     Object.values(gruppeListe).forEach((gruppe) => {
