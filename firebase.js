@@ -138,6 +138,8 @@ async function hentTreninger() {
                 gruppe = {
                     gruppe: gruppenavn,
                     brukere: {},
+                    treninger: 0,
+                    brukerAntall: 0,
                 }
                 gruppeListe[gruppenavn] = gruppe
             }
@@ -152,8 +154,10 @@ async function hentTreninger() {
                     datoer: [],
                 }
                 gruppe.brukere[brukernavn] = bruker
+                gruppe.brukerAntall++
             }
             bruker.treninger++
+            gruppe.treninger++
             bruker.datoer.push(data.datostr)
         }
     })
@@ -189,11 +193,15 @@ function logData(data, mld) {
 
 function fixTreningsData(gruppeListe) {
     Object.values(gruppeListe).forEach((gruppe) => {
+        gruppe.treninger = 0
+        gruppe.brukerAntall = 0
         Object.values(gruppe.brukere).forEach((bruker) => {
             // Remove duplicates:
             bruker.datoer = [...new Set(bruker.datoer)]
             bruker.datoer.sort()
             bruker.treninger = bruker.datoer.length
+            gruppe.treninger += bruker.treninger
+            gruppe.brukerAntall++
         })
     })
 }
@@ -206,17 +214,29 @@ function skrivTreningerTilDom(gruppeListe) {
         gruppeDiv.textContent = gruppe.gruppe
         gruppeDiv.className = "gruppe"
         resultsDiv.appendChild(gruppeDiv)
+
+        const gruppeResults = document.createElement("div")
+        gruppeResults.className = "grupperesults"
+        gruppeResults.textContent =
+            gruppe.treninger +
+            " treninger" +
+            ", delt på: " +
+            gruppe.brukerAntall +
+            " gir et snitt på " +
+            Math.round((gruppe.treninger * 10) / gruppe.brukerAntall) / 10
+        gruppeDiv.appendChild(gruppeResults)
+
         Object.values(gruppe.brukere).forEach((bruker) => {
             const brukerDiv = document.createElement("div")
             brukerDiv.className = "bruker"
             brukerDiv.textContent = `${bruker.brukernavn} - ${bruker.treninger} treninger`
             gruppeDiv.appendChild(brukerDiv)
-            /*             bruker.datoer.forEach((datostr) => {
-                const datoDiv = document.createElement("div")
-                datoDiv.textContent = datostr
-                brukerDiv.appendChild(datoDiv)
+            const datoDiv = document.createElement("div")
+            bruker.datoer.forEach((datostr) => {
+                datoDiv.innerHTML += datostr + "<br>"
             })
- */
+            datoDiv.className = "datoer"
+            brukerDiv.appendChild(datoDiv)
         })
     })
 }

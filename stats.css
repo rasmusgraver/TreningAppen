@@ -42,30 +42,32 @@ h2 {
     margin-bottom: 30px;
     font-size: 2em;
 }
+.grupperesults {
+    font-size: 0.7em;
+    font-weight: bold;
+    color: var(--nykodepurple);
+    background-color: rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    padding: 3px;
+    border-radius: 4px;
+}
 .bruker {
     font-size: 0.5em;
+    position: relative;
 }
-/* 
-Gamle måten å tenke på 
-.table_container {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 20px;
-    width: fit-content;
-    margin: auto;
+.datoer {
+    display: none;
+    position: absolute;
+    color: var(--nykodepurple);
+    font-weight: bold;
+    top: 0;
+    right: 50px;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.9);
 }
-
-table {
-    border-collapse: collapse;
-    margin: 5px;
+.bruker:hover .datoer {
+    display: block;
 }
-
-th,
-td {
-    border: 1px solid var(--nykodeorange);
-    padding: 3px;
-}
- */
 
 @media (width < 500px) {
     h1,
