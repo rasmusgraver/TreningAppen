@@ -63,7 +63,8 @@ h2 {
     top: 0;
     right: 50px;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: var(--nykodeorange);
+    padding: 4px;
 }
 .bruker:hover .datoer {
     display: block;

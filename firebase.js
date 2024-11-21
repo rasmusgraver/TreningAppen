@@ -190,8 +190,8 @@ async function hentTreninger() {
     querySnapshot.forEach((doc) => {
         const data = doc.data()
         const gruppenavn = data.gruppe.trim()
-
-        if (gruppenavn == "test" || gruppenavn == "nykode") {
+        const testGruppeNavn = ["test", "nykode", "ita"]
+        if (testGruppeNavn.includes(gruppenavn)) {
             // logData(data, "Ignorerer trening pga gruppenavn: ")
             antMedTestGruppe++
         } else if (!data.datostr || data.datostr == "2024_11_11") {
@@ -243,7 +243,7 @@ async function hentTreninger() {
     console.log(JSON.stringify(gruppeListe, null, 2))
 
     console.log(
-        "Ignorerte treninger testGruppe (Det var 17): ",
+        "Ignorerte treninger testGruppe (Det var 56): ",
         antMedTestGruppe
     )
     console.log("Ignorerte treninger tomDato (Det var 14): ", antMedTomDato)
