@@ -39,17 +39,44 @@ const dbName = "trening"
 const treningCollection = collection(db, dbName)
 const statusDiv = document.getElementById("status")
 
-async function addToDB() {
+function getCurrentDatostr(offset = 0) {
     const dato = new Date()
-    const mnd = dato.getMonth() + 1
-    const dag = dato.getDate()
-    const aar = dato.getFullYear()
-    const datostr =
+    let mnd = dato.getMonth() + 1
+    let dag = dato.getDate() - offset
+    let aar = dato.getFullYear()
+
+    if (dag < 0) {
+        mnd -= 1
+        dag = 31
+        if (mnd < 1) {
+            mnd = 12
+            aar -= 1
+        }
+        if (mnd in [4, 6, 9, 11]) {
+            dag = 30
+        } else if (mnd === 2) {
+            if ((aar % 4 === 0 && aar % 100 !== 0) || aar % 400 === 0) {
+                dag = 29
+            } else {
+                dag = 28
+            }
+        }
+    }
+    return (
         aar +
         "_" +
         mnd.toString().padStart(2, "0") +
         "_" +
         dag.toString().padStart(2, "0")
+    )
+}
+
+async function addToDB() {
+    const dato = new Date()
+    const mnd = dato.getMonth() + 1
+    const dag = dato.getDate()
+    const aar = dato.getFullYear()
+    const datostr = getCurrentDatostr()
     if (datostr != localStorage.getItem("datostr")) {
         statusDiv.textContent = "Lagrer til DB"
         statusDiv.className = "blue"
@@ -62,14 +89,25 @@ async function addToDB() {
             aar: aar,
             timestamp: serverTimestamp(),
         })
-        console.log("Lagret til Firebase")
-        localStorage.setItem("datostr", datostr)
-        verifiserInsert(datostr)
     } else {
         console.log("Allerede lagret i Firebase")
         statusDiv.textContent = "Allerede lagret i DB"
         statusDiv.className = "blue"
-        clearStatusTimer()
+        // Trengs ikke lenger?  clearStatusTimer()
+    }
+
+    const streak = await verifiserInsert()
+    if (streak > 0) {
+        console.log("Lagret til Firebase")
+        localStorage.setItem("datostr", datostr)
+        statusDiv.textContent = "Streak på " + streak + " dager"
+        statusDiv.className = "green"
+        // TODO TAKE BACK! (ELLER ikke!?) clearStatusTimer()
+    } else {
+        console.log("Klarte ikke å lagre i Firebase. Streak: " + streak)
+        alert("Fikk ikke lagret treningen din i Databasen!")
+        statusDiv.textContent = "Klarte ikke å lagre i DB"
+        statusDiv.className = "red"
     }
 }
 
@@ -82,25 +120,62 @@ function clearStatusTimer() {
     }, 2000)
 }
 
-async function verifiserInsert(datostr) {
+async function verifiserInsert() {
     const querySnapshot = await getDocs(
         query(
             treningCollection,
-            where("datostr", "==", datostr),
+            // where("datostr", "==", datostr),
             where("navn", "==", brukernavn),
-            where("gruppe", "==", gruppenavn),
-            limit(1)
+            where("gruppe", "==", gruppenavn)
+            // Funker ikke ... orderBy("datostr", "desc")
+            // limit(1)
         )
     )
     if (querySnapshot.docs.length == 0) {
-        alert("Fikk ikke lagret treningen din i Databasen!")
-        statusDiv.textContent = "Klarte ikke å lagre i DB"
-        statusDiv.className = "red"
+        return 0
     } else {
-        statusDiv.textContent = "Lagret i DB"
-        statusDiv.className = "green"
-        clearStatusTimer()
+        return getStreak(getDatostringsSorted(querySnapshot.docs))
     }
+}
+
+function getStreak(datostrings) {
+    let streak = 0
+    let datostr = getCurrentDatostr()
+    let previousDatostr = ""
+
+    for (let datostring of datostrings) {
+        console.log("Sjekker: " + datostring)
+        if (datostring == previousDatostr) {
+            // I tilfelle en dato er lagret dobbelt
+            console.log("Samme som forrige: " + datostring)
+        } else {
+            if (datostring == datostr) {
+                streak += 1
+                console.log("Økte streak med 1: " + datostring)
+            } else {
+                console.log("Slutt på streak: " + datostring)
+                return streak
+            }
+            previousDatostr = datostr // Lagrer for å sjekke for duplikater
+            datostr = getCurrentDatostr(streak) // The streak works as the offset here...
+        }
+    }
+    return streak
+}
+
+function getDatostringsSorted(docs) {
+    const datostrings = []
+    docs.forEach((doc) => {
+        const data = doc.data()
+        if (data.datostr != "2024_11_9") {
+            // Feil i dataene som ble lagret først...
+            datostrings.push(data.datostr)
+        }
+    })
+    datostrings.sort()
+    datostrings.reverse() // Sorterer fra nyeste til eldste
+    console.log("Sorterte datostr: ", datostrings)
+    return datostrings
 }
 
 async function hentTreninger() {

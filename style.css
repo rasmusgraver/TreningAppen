@@ -105,8 +105,10 @@ main p {
     padding: 5px 20px;
 }
 #status.green {
-    background-color: lightgreen;
-    padding: 5px 20px;
+    bottom: 50%;
+    background-color: #60ec79;
+    padding: 20px;
+    font-size: 1.5em;
 }
 
 #tren i {
