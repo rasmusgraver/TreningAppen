@@ -100,7 +100,12 @@ async function addToDB() {
     if (streak > 0) {
         console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
-        statusDiv.textContent = "Streak på " + streak + " dager"
+        statusDiv.innerHTML =
+            "Streak på " +
+            streak +
+            " dager" +
+            "<br> => " +
+            getStreakMessage(streak)
         statusDiv.className = "green"
         // TODO TAKE BACK! (ELLER ikke!?) clearStatusTimer()
     } else {
@@ -118,6 +123,20 @@ function clearStatusTimer() {
         statusDiv.textContent = ""
         statusDiv.className = ""
     }, 2000)
+}
+
+function getStreakMessage(streak) {
+    if (streak < 3) {
+        return "Jobba på!"
+    } else if (streak < 6) {
+        return "Sterkt!"
+    } else if (streak < 9) {
+        return "Imponerende!"
+    } else if (streak < 12) {
+        return "WHAT!? Sykt bra!"
+    } else {
+        return "Gratulerer! Julekroppen er sikret!"
+    }
 }
 
 async function verifiserInsert() {
