@@ -186,7 +186,7 @@ function getDatostringsSorted(docs) {
     const datostrings = []
     docs.forEach((doc) => {
         const data = doc.data()
-        if (data.datostr != "2024_11_9") {
+        if (data.datostr && data.datostr != "2024_11_9") {
             // Feil i dataene som ble lagret først...
             datostrings.push(data.datostr)
         }
@@ -218,9 +218,11 @@ async function hentTreninger() {
             antMedTomDato++
         } else {
             if (
-                data.navn == "Ida Sofie" ||
-                data.navn == "Gro Helene" ||
-                data.navn.startsWith("Lars")
+                // data.navn == "Ida Sofie" ||
+                // data.navn == "Gro Helene" ||
+                data.navn.startsWith("Lena") &&
+                data.mnd == "11" &&
+                data.dag == "22"
             ) {
                 logData(data, "Debug:")
             }
@@ -259,7 +261,7 @@ async function hentTreninger() {
     fixTreningsData(gruppeListe)
 
     // console.log(gruppeListe)
-    console.log(JSON.stringify(gruppeListe, null, 2))
+    // console.log(JSON.stringify(gruppeListe, null, 2))
 
     console.log(
         "Ignorerte treninger testGruppe (Det var 56): ",
@@ -291,7 +293,19 @@ function fixTreningsData(gruppeListe) {
         gruppe.brukerAntall = 0
         Object.values(gruppe.brukere).forEach((bruker) => {
             // Remove duplicates:
+            const oldLen = bruker.datoer.length
             bruker.datoer = [...new Set(bruker.datoer)]
+            const newLen = bruker.datoer.length
+            if (oldLen > newLen + 2) {
+                console.log(
+                    "Fjernet duplicater: ",
+                    oldLen - newLen,
+                    " av i alt ",
+                    oldLen,
+                    " for bruker: ",
+                    bruker.brukernavn
+                )
+            }
             bruker.datoer.sort()
             bruker.treninger = bruker.datoer.length
             gruppe.treninger += bruker.treninger
