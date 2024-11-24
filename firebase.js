@@ -98,14 +98,9 @@ async function addToDB() {
 
     const streak = await verifiserInsert()
     if (streak > 0) {
-        console.log("Lagret til Firebase")
         localStorage.setItem("datostr", datostr)
         statusDiv.innerHTML =
-            "Streak på " +
-            streak +
-            " dager" +
-            "<br> => " +
-            getStreakMessage(streak)
+            "Streak på " + streak + " dager" + "<br> => " + getStreakMessage()
         statusDiv.className = "green"
         // TODO TAKE BACK! (ELLER ikke!?) clearStatusTimer()
     } else {
@@ -125,18 +120,31 @@ function clearStatusTimer() {
     }, 2000)
 }
 
-function getStreakMessage(streak) {
-    if (streak < 3) {
-        return "Jobba på!"
-    } else if (streak < 6) {
-        return "Sterkt!"
-    } else if (streak < 9) {
-        return "Imponerende!"
-    } else if (streak < 12) {
-        return "WHAT!? Sykt bra!"
-    } else {
-        return "Gratulerer! Julekroppen er sikret!"
-    }
+function getStreakMessage() {
+    const tilbakemeldinger = [
+        "Jobba på!",
+        "Sterkt!",
+        "Imponerende!",
+        "Du er god!!",
+        "Fantastisk innsats!",
+        "Du eier dette!",
+        "Knallbra jobba!",
+        "For en fremgang!",
+        "Du viser ekte styrke!",
+        "WOW, for en prestasjon!",
+        "Dette er hardt arbeid i praksis!",
+        "Helt rå!",
+        "Du er så dedikert!",
+        "Keep it up, dette er veien til suksess!",
+        "Hver økt teller, og du nailer det!",
+        "Du inspirerer!",
+        "Power! Du er på topp!",
+        "Så stolt av deg!",
+        "Flink du er, dette er gull!",
+        "Du blir bare bedre og bedre!",
+        "Julekroppen er snart i boks!",
+    ]
+    return tilbakemeldinger[Math.floor(Math.random() * tilbakemeldinger.length)]
 }
 
 async function verifiserInsert() {
