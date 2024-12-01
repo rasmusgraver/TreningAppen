@@ -45,20 +45,20 @@ function getCurrentDatostr(offset = 0) {
     let dag = dato.getDate() - offset
     let aar = dato.getFullYear()
 
-    if (dag < 0) {
+    if (dag <= 0) {
         mnd -= 1
-        dag = 31
+        dag += 31
         if (mnd < 1) {
             mnd = 12
             aar -= 1
         }
-        if (mnd in [4, 6, 9, 11]) {
-            dag = 30
-        } else if (mnd === 2) {
-            if ((aar % 4 === 0 && aar % 100 !== 0) || aar % 400 === 0) {
-                dag = 29
+        if ([4, 6, 9, 11].includes(mnd)) {
+            dag -= 1
+        } else if (mnd == 2) {
+            if ((aar % 4 == 0 && aar % 100 != 0) || aar % 400 == 0) {
+                dag -= 2
             } else {
-                dag = 28
+                dag -= 3
             }
         }
     }
@@ -100,7 +100,11 @@ async function addToDB() {
     if (streak > 0) {
         localStorage.setItem("datostr", datostr)
         statusDiv.innerHTML =
-            "Streak på " + streak + " dager" + "<br> => " + getStreakMessage()
+            "Streak på " +
+            streak +
+            " dager" +
+            "<br> => " +
+            getStreakMessage(streak)
         statusDiv.className = "green"
         // TODO TAKE BACK! (ELLER ikke!?) clearStatusTimer()
     } else {
@@ -120,21 +124,16 @@ function clearStatusTimer() {
     }, 2000)
 }
 
-function getStreakMessage() {
-    const tilbakemeldinger = [
+function getStreakMessage(streak) {
+    let tilbakemeldinger = [
         "Jobba på!",
         "Sterkt!",
         "Imponerende!",
         "Du er god!!",
-        "Fantastisk innsats!",
         "Du eier dette!",
         "Knallbra jobba!",
         "For en fremgang!",
         "Du viser ekte styrke!",
-        "WOW, for en prestasjon!",
-        "Dette er hardt arbeid i praksis!",
-        "Helt rå!",
-        "Du er så dedikert!",
         "Keep it up, dette er veien til suksess!",
         "Hver økt teller, og du nailer det!",
         "Du inspirerer!",
@@ -142,8 +141,18 @@ function getStreakMessage() {
         "Så stolt av deg!",
         "Flink du er, dette er gull!",
         "Du blir bare bedre og bedre!",
-        "Julekroppen er snart i boks!",
     ]
+    if (streak > 10) {
+        tilbakemeldinger.push("Helt rå!")
+        tilbakemeldinger.push("Du er så dedikert!")
+        tilbakemeldinger.push("Julekroppen er snart i boks!")
+        tilbakemeldinger.push("Fantastisk innsats!")
+    }
+    if (streak > 20) {
+        tilbakemeldinger.push("WOW, for en prestasjon!")
+        tilbakemeldinger.push("Dette er hardt arbeid i praksis!")
+    }
+
     return tilbakemeldinger[Math.floor(Math.random() * tilbakemeldinger.length)]
 }
 
@@ -180,7 +189,10 @@ function getStreak(datostrings) {
                 streak += 1
                 console.log("Økte streak med 1: " + datostring)
             } else {
-                console.log("Slutt på streak: " + datostring)
+                console.log(
+                    "Slutt på streak: " + datostring,
+                    " (skulle vært " + datostr + ")"
+                )
                 return streak
             }
             previousDatostr = datostr // Lagrer for å sjekke for duplikater
