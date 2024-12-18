@@ -196,6 +196,12 @@ main p {
     border-radius: 5em;
 }
 
+#vin {
+    width: 20%;
+    display: none;
+    position: absolute;
+}
+
 @media (width < 500px) {
     main p {
         font-size: 1em;

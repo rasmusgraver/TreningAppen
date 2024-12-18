@@ -5,6 +5,23 @@ const context = celebration.getContext("2d")
 const maxConfettis = 150
 const particles = []
 
+let vinx = 0
+let viny = 0
+const vinElm = document.getElementById("vin")
+
+function visVin() {
+    vinElm.style.display = "block"
+}
+function flyttVin() {
+    vinx += 1
+    viny += 6
+    vinElm.style.left = vinx + "px"
+    vinElm.style.top = viny + "px"
+    if (viny > document.body.offsetHeight) {
+        viny = 0
+    }
+}
+
 const possibleColors = [
     "DodgerBlue",
     "OliveDrab",
@@ -89,6 +106,7 @@ function celebrate() {
             particle.tilt = Math.floor(Math.random() * 10) - 20
         }
     }
+    flyttVin()
 
     return results
 }
