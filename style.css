@@ -41,7 +41,7 @@ body {
 main {
     height: 100%;
     display: none; /* endres med JS */
-    background-image: url("trening.jpg");
+    background-image: url("bilder/trening.jpg");
     background-size: cover;
     background-position: center;
     align-items: center;

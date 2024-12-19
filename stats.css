@@ -17,7 +17,7 @@ html {
     min-height: 100vh;
 }
 body {
-    background-image: url("trening.jpg");
+    background-image: url("bilder/trening.jpg");
     background-position: center;
     background-size: cover;
     color: var(--nykodeorange);
